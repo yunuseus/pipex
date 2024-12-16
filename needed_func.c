@@ -18,8 +18,15 @@ char	**get_path(char **env)
 	int	i;
 
 	i = 0;
-	while (ft_strcmp(env[i], "PATH=", 5))
-
+	while (env[i])
+	{
+		if (ft_strcmp(env[i], "PATH=", 5))
+		{
+			path = ft_split(env[i], ':');
+			return (path);
+		}
+		i++;
+	}
 	return (path);
 }
 
@@ -37,3 +44,7 @@ char	*ret_path(char **env)
 	return (path);
 }
 
+void	pipex_run(char *cmd, char *env)
+{
+
+}
