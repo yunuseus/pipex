@@ -15,13 +15,25 @@
 char	**get_path(char **env)
 {
 	char **path;
+	int	i;
 
-	path = ft_split(env, ':');
+	i = 0;
+	while (ft_strcmp(env[i], "PATH=", 5))
+
+	return (path);
 }
 
 char	*ret_path(char **env)
 {
-	
-}
+	int	i;
+	char	*path;
 
+	i = 0;
+	while (env[i])
+	{
+	path = ft_strjoin(path, env[i]);
+	i++;
+	}
+	return (path);
+}
 
