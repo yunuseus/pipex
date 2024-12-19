@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:36 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/19 16:28:02 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/19 17:20:02 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void childp(char **argv, int fd[2], char **env)
 		ft_putendl_fd(" no such file or directory", 1);
 	}
 
-	dup2(fd[1], STDOUT_FILENO);
-	dup2(ffd, STDIN_FILENO);
 	close(fd[0]);
+	dup2(ffd, STDIN_FILENO);
 	close(ffd);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
 	ft_pipex_run(argv[2], env);
 }
 
@@ -40,8 +41,8 @@ void parentp(char **argv, int fd[2], char **env)
 		ft_putendl_fd(" no such file or directory", 1);
 	}
 	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 	dup2(ffd, STDOUT_FILENO);
-	close(fd[1]);
 	close(ffd);
 	ft_pipex_run(argv[3], env);
 	
