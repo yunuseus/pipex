@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:36 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/18 19:33:07 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/19 16:28:02 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,26 @@ void childp(char **argv, int fd[2], char **env)
 		ft_putstr_fd(argv[1], 1);
 		ft_putendl_fd(" no such file or directory", 1);
 	}
-	close(fd[0]);
-	dup2(ffd, STDIN_FILENO);
-	close(ffd);
+
 	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
+	dup2(ffd, STDIN_FILENO);
+	close(fd[0]);
+	close(ffd);
 	ft_pipex_run(argv[2], env);
 }
 
 void parentp(char **argv, int fd[2], char **env)
 {	
 	int ffd;
-	ffd = open(argv[4], O_CREAT | O_RDWR);
+	ffd = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (ffd == -1)
 	{
 		ft_putstr_fd(argv[4], 1);
 		ft_putendl_fd(" no such file or directory", 1);
 	}
 	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
 	dup2(ffd, STDOUT_FILENO);
+	close(fd[1]);
 	close(ffd);
 	ft_pipex_run(argv[3], env);
 	
@@ -52,7 +52,6 @@ int main(int argc, char **argv, char **env)
 	int f;
 	int fd[2];
 
-
 	if (argc == 5)
 	{
 		pipe(fd);
@@ -61,12 +60,8 @@ int main(int argc, char **argv, char **env)
 		{
 			childp(argv, fd, env);
 		}
-		else
-		{
-			waitpid(f,NULL,0);
-			parentp(argv, fd, env);
-			
-		}
+		waitpid(f,NULL,0);
+		parentp(argv, fd, env);
 	}
 	else
 	{

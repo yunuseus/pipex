@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:58 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/18 19:32:43 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/19 16:24:27 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	**get_path(char **env)
 
 char	*ret_path(char **env, char *cmd)
 {
-	int	i;
 	char	**path;
 	char	*tmpath;
 	char	*tpath;
@@ -60,7 +59,7 @@ void	ft_pipex_run(char *cmd, char **env)
 	char	**cmds;
 
 	
-	cmds = ft_split("cmd", ' ');
+	cmds = ft_split(cmd, ' ');
 	if (ft_strchr(cmds[0], '/'))
 	{
 		path = cmds[0];
@@ -73,7 +72,7 @@ void	ft_pipex_run(char *cmd, char **env)
 		}
 	}
 	else
-		path = ret_path(env, cmd);
+		path = ret_path(env, cmds[0]);
 	execve(path, cmds, env);
 	free(cmds);
 }

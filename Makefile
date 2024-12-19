@@ -6,7 +6,7 @@ SRCS = needed_func.c pipex.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 $(PROG): $(OBJS)
@@ -27,8 +27,7 @@ fclean: clean
 	$(RM) $(PROG)
 	make fclean -C libft
 
-re:
-	fclean all
+re: fclean all
 
 
 .PHONY: all clean fclean re
