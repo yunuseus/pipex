@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:36 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/21 17:38:12 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/21 17:47:48 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ int main(int argc, char **argv, char **env)
 		pipe(fd);
 		f = fork();
 		if (f == 0)
-		{
 			childp(argv, fd, env);
-		}
 		waitpid(f, NULL, 0);
 		parentp(argv, fd, env);
 
