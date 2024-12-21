@@ -6,11 +6,12 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:58 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/19 16:24:27 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/21 17:28:03 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
 
 char	**get_path(char **env)
 {
@@ -50,6 +51,8 @@ char	*ret_path(char **env, char *cmd)
 			free(tpath);
 		path++;
 	}
+	ft_putstr_fd("command not found: ", 2);
+	ft_putendl_fd(cmd, 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -67,7 +70,6 @@ void	ft_pipex_run(char *cmd, char **env)
 		{
 			free(path);
 			free(cmds);
-			
 			exit(EXIT_FAILURE);
 		}
 	}
