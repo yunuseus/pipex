@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:36 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/21 17:47:48 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/21 18:13:09 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void childp(char **argv, int fd[2], char **env)
 	ffd = open(argv[1], O_RDONLY);
 	if (ffd == -1)
 	{
+		if (access(argv[1], R_OK) == -1)
+		{
+			ft_putstr_fd(argv[1], 2);
+			ft_putendl_fd(": Permission denied", 2);
+		}
 		ft_putstr_fd(argv[1], 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		exit(EXIT_FAILURE);
@@ -38,6 +43,11 @@ void parentp(char **argv, int fd[2], char **env)
 	ffd = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (ffd == -1)
 	{
+		if (access(argv[1], W_OK) == -1)
+		{
+			ft_putstr_fd(argv[1], 2);
+			ft_putendl_fd(": Permission denied", 2);
+		}
 		ft_putstr_fd(argv[4], 2);
 		ft_putendl_fd(" No such file or directory", 2);
 		exit(EXIT_FAILURE);
