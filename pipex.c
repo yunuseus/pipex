@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:36 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/22 15:26:43 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/22 17:45:37 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static void	childp(char **argv, int fd[2], char **env)
 		{
 			ft_putstr_fd(argv[1], 2);
 			ft_putendl_fd(": Permission denied", 2);
-			exit (0);
+			exit (1);
 		}
 		ft_putstr_fd(argv[1], 2);
 		ft_putendl_fd(": No such file or directory", 2);
-		exit (0);
+		exit (1);
 	}
 	close(fd[0]);
 	dup2(ffd, STDIN_FILENO);
@@ -46,13 +46,13 @@ static void	parentp(char **argv, int fd[2], char **env)
 	{
 		if (access(argv[4], W_OK) == -1)
 		{
-			ft_putstr_fd(argv[1], 2);
+			ft_putstr_fd(argv[4], 2);
 			ft_putendl_fd(": Permission denied", 2);
-			exit (0);
+			exit (1);
 		}
 		ft_putstr_fd(argv[4], 2);
 		ft_putendl_fd(" No such file or directory", 2);
-		exit (0);
+		exit (1);
 	}
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -75,7 +75,6 @@ int	main(int argc, char **argv, char **env)
 			childp(argv, fd, env);
 		waitpid(f, NULL, 0);
 		parentp(argv, fd, env);
-		exit(10);
 	}
 	else
 		ft_putendl_fd("BAD ARGUMENTS!!\nEX : ./pipex file1 cmd1 cmd2 file2", 2);
