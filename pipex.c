@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:36 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/22 17:45:37 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/22 17:55:18 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static void	childp(char **argv, int fd[2], char **env)
 	{
 		if (access(argv[1], R_OK) == -1 && access(argv[1], F_OK) != -1)
 		{
-			ft_putstr_fd(argv[1], 2);
-			ft_putendl_fd(": Permission denied", 2);
+			ft_putstr_fd("permission denied: ", 2);
+			ft_putendl_fd(argv[1], 2);
 			exit (1);
 		}
-		ft_putstr_fd(argv[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		ft_putendl_fd(argv[1], 2);
+		ft_putstr_fd(": No such file or directory", 2);
 		exit (1);
 	}
 	close(fd[0]);
@@ -46,8 +46,8 @@ static void	parentp(char **argv, int fd[2], char **env)
 	{
 		if (access(argv[4], W_OK) == -1)
 		{
-			ft_putstr_fd(argv[4], 2);
-			ft_putendl_fd(": Permission denied", 2);
+			ft_putstr_fd("permission denied: ", 2);
+			ft_putendl_fd(argv[4], 2);
 			exit (1);
 		}
 		ft_putstr_fd(argv[4], 2);
