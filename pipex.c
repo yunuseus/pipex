@@ -6,15 +6,15 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:36 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/21 19:30:34 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/22 15:26:43 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void childp(char **argv, int fd[2], char **env)
+static void	childp(char **argv, int fd[2], char **env)
 {
-	int ffd;
+	int	ffd;
 
 	ffd = open(argv[1], O_RDONLY);
 	if (ffd == -1)
@@ -29,7 +29,6 @@ void childp(char **argv, int fd[2], char **env)
 		ft_putendl_fd(": No such file or directory", 2);
 		exit (0);
 	}
-
 	close(fd[0]);
 	dup2(ffd, STDIN_FILENO);
 	close(ffd);
@@ -38,9 +37,10 @@ void childp(char **argv, int fd[2], char **env)
 	ft_pipex_run(argv[2], env);
 }
 
-void parentp(char **argv, int fd[2], char **env)
+static void	parentp(char **argv, int fd[2], char **env)
 {	
-	int ffd;
+	int	ffd;
+
 	ffd = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (ffd == -1)
 	{
@@ -62,10 +62,10 @@ void parentp(char **argv, int fd[2], char **env)
 	ft_pipex_run(argv[3], env);
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	int f;
-	int fd[2];
+	int	f;
+	int	fd[2];
 
 	if (argc == 5)
 	{

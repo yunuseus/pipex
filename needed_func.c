@@ -6,17 +6,16 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:58 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/21 19:25:44 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/22 15:27:04 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-
-char	**get_path(char **env)
+static char	**get_path(char **env)
 {
-	char **path;
-	int	i;
+	char	**path;
+	int		i;
 
 	path = NULL;
 	i = 0;
@@ -32,12 +31,11 @@ char	**get_path(char **env)
 	return (path);
 }
 
-char	*ret_path(char **env, char *cmd)
+static char	*ret_path(char **env, char *cmd)
 {
 	char	**path;
 	char	*tmpath;
 	char	*tpath;
-
 
 	path = get_path(env);
 	while (path && *path)
@@ -46,7 +44,7 @@ char	*ret_path(char **env, char *cmd)
 		tpath = ft_strjoin(tmpath, cmd);
 		free(tmpath);
 		if (access(tpath, X_OK) == 0)
-			return(tpath);
+			return (tpath);
 		else
 			free(tpath);
 		path++;
@@ -61,7 +59,6 @@ void	ft_pipex_run(char *cmd, char **env)
 	char	*path;
 	char	**cmds;
 
-	
 	cmds = ft_split(cmd, ' ');
 	if (ft_strchr(cmds[0], '/'))
 	{
