@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:58 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/23 17:41:00 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/23 19:12:28 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,14 @@ void	ft_pipex_run(char *cmd, char **env)
 		path = cmds[0];
 		if (access(cmds[0], X_OK) == -1)
 		{
-			free(path);
 			if (access(cmds[0], F_OK) == 0)
+			{
 				ft_puterr(cmds[0], 1);
+				free(cmds);
+			}
 			else
 				ft_puterr(cmds[0], 2);
+			free(path);
 			free(cmds);
 			exit (127);
 		}
