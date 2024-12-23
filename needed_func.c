@@ -6,7 +6,7 @@
 /*   By: yalp <yalp@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:08:58 by yalp              #+#    #+#             */
-/*   Updated: 2024/12/23 16:57:44 by yalp             ###   ########.fr       */
+/*   Updated: 2024/12/23 17:41:00 by yalp             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,18 @@ static void	ft_puterr(char *a, int b)
 	{
 		ft_putstr_fd(a, 2);
 		ft_putendl_fd(": Permission denied", 2);
+		free(a);
 		exit (126);
 	}
 	if (b == 2)
 	{
 		ft_putstr_fd(a, 2);
 		ft_putendl_fd(": No such file or directory ", 2);
+	}
+	if (b == 3)
+	{
+		ft_putstr_fd(a, 2);
+		ft_putendl_fd(": command not found", 2);
 	}
 }
 
@@ -62,14 +68,13 @@ static char	*ret_path(char **env, char *cmd)
 			return (tpath);
 		else if (access(tpath, X_OK) != 0 && access(tpath, F_OK) == 0)
 		{
-			ft_puterr(cmd, 1);
 			free(tpath);
-			exit(127);
+			ft_puterr(cmd, 1);
 		}
 		free(tpath);
 		path++;
 	}
-	ft_puterr(cmd, 2);
+	ft_puterr(cmd, 3);
 	exit(127);
 }
 
@@ -84,11 +89,11 @@ void	ft_pipex_run(char *cmd, char **env)
 		path = cmds[0];
 		if (access(cmds[0], X_OK) == -1)
 		{
+			free(path);
 			if (access(cmds[0], F_OK) == 0)
 				ft_puterr(cmds[0], 1);
 			else
 				ft_puterr(cmds[0], 2);
-			free(path);
 			free(cmds);
 			exit (127);
 		}
