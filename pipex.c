@@ -25,8 +25,8 @@ static void	childp(char **argv, int fd[2], char **env)
 			ft_putendl_fd(": Permission denied ", 2);
 			exit (1);
 		}
-		ft_putendl_fd(argv[1], 2);
-		ft_putstr_fd(": No such file or directory", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		exit (1);
 	}
 	close(fd[0]);
