@@ -12,8 +12,17 @@
 
 #include "pipex.h"
 
-static void	ft_puterr(char *a, int b)
+static void	ft_puterr(char *a, int b, char **c)
 {
+	if (b == 4)
+	{
+		ft_putstr_fd(a, 2);
+		ft_putendl_fd(": Permission denied", 2);
+		free(a);
+		free(c);
+		exit (126);
+	}
+	(void)c;
 	if (b == 1)
 	{
 		ft_putstr_fd(a, 2);
@@ -69,12 +78,12 @@ static char	*ret_path(char **env, char *cmd)
 		else if (access(tpath, X_OK) != 0 && access(tpath, F_OK) == 0)
 		{
 			free(tpath);
-			ft_puterr(cmd, 1);
+			ft_puterr(cmd, 1, NULL);
 		}
 		free(tpath);
 		path++;
 	}
-	ft_puterr(cmd, 3);
+	ft_puterr(cmd, 3, NULL);
 	exit(127);
 }
 
@@ -90,12 +99,9 @@ void	ft_pipex_run(char *cmd, char **env)
 		if (access(cmds[0], X_OK) == -1)
 		{
 			if (access(cmds[0], F_OK) == 0)
-			{
-				ft_puterr(cmds[0], 1);
-				free(cmds);
-			}
+				ft_puterr(cmds[0], 4, cmds);
 			else
-				ft_puterr(cmds[0], 2);
+				ft_puterr(cmds[0], 2, NULL);
 			free(path);
 			free(cmds);
 			exit (127);
